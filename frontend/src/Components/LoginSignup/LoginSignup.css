@@ -1,4 +1,4 @@
-.container {
+.form {
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -31,7 +31,7 @@
     border-radius: 9px;
 }
 
-.inputs {
+.inputfields {
     margin-top: 55px;
     display: flex;
     flex-direction: column;
@@ -64,10 +64,13 @@
 }
 
 .forgot-password {
-    padding-left: 62px;
-    color: gray;
+    /* display: flex; */
+    /* justify-content: center; */
+    align-items: left;
+    width: auto;
+    height: auto;
     font-size: 18px;
-    padding-bottom: 101px;
+    margin: 5px 70px;
 }
 
 .forgot-password span {
@@ -75,7 +78,7 @@
     cursor: pointer;
 }
 
-.register {
+.submit {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,13 +108,13 @@
     margin: auto auto;
 }
 
-.submit-container {
+.switch {
     display: flex;
     gap: 30px;
     margin: auto auto;
 }
 
-.submit {
+/* .submit {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,7 +126,7 @@
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
-}
+} */
 
 .gray {
     background: white;
