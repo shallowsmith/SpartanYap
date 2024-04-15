@@ -2,7 +2,7 @@
 
 import React from "react";
 
-function Post({ title, content }) {
+export default function Post({ title, content }) {
   return (
     <div className="post">
       <h2>{title}</h2>
@@ -10,5 +10,3 @@ function Post({ title, content }) {
     </div>
   );
 }
-
-export default Post;
