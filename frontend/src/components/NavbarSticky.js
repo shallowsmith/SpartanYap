@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Navbar,
@@ -36,9 +37,9 @@ export default function NavbarSticky() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Trending
-        </a>
+        <Link to="/feed" className="flex items-center">
+          Feed
+        </Link>
       </Typography>
       <Typography
         as="li"
