@@ -40,8 +40,9 @@ export default function Signup() {
       if (response.ok) {
         console.log("Success:", data);
         // Handle success (e.g., navigate to another page, show message)
-        navigate('/feed')
-      } else {
+        navigate('/login')
+      } 
+      else {
         throw new Error(data.error || "Unknown error");
       }
     } catch (error) {

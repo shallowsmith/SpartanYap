@@ -5,7 +5,7 @@ import Post from "../components/Post";
 
 export default function FeedPage({posts, updateCallback}) {
   const [newPostContent, setNewPostContent] = useState()
-  const {currentUser} = true
+  const {currentUser} = false
 
   const onSubmit = async (e) => {
     e.preventDefault()

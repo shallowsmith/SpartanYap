@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from datetime import datetime
 from dotenv import load_dotenv
@@ -31,6 +31,17 @@ class User(db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False)
     posts = db.relationship('Post', backref = 'author', lazy = 'dynamic')
     signupdate = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password, password)
+
+    def to_json(self):
+        return {
+            "userid": self.userid,
+            "username": self.username,
+            "password": self.password,
+            "email": self.email,
+        }
 
 class Post(db.Model):
     __tablename__ = 'posts'
@@ -64,6 +75,22 @@ def create_post():
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
     
+#Route for handling login
+@app.route('/login', methods = ['POST'])
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Both username and password are required'}), 400
+
+    user = User.query.filter_by(username=username).first()
+
+    if user and user.verify_password(password):
+        return jsonify({'message': 'Login successful', 'user': {'id': user.userid, 'username': user.username}}), 200
+    else:
+        return jsonify({'message': 'Invalid credentials'}), 401
+
 
 # Route for handling the signup process
 @app.route('/signup', methods=['POST'])

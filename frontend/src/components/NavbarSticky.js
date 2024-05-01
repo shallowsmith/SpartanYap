@@ -22,7 +22,7 @@ export default function NavbarSticky() {
   }, []);
 
   const handleLogin = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const handleSignup = () => {
@@ -151,7 +151,7 @@ export default function NavbarSticky() {
         <Collapse open={openNav}>
           {navList}
           <div className="flex items-center gap-x-1">
-            <Button fullWidth variant="text" size="sm" className="">
+            <Button fullWidth variant="text" size="sm" className="" onClick={handleLogin}>
               <span>Log In</span>
             </Button>
             <Button
@@ -159,6 +159,8 @@ export default function NavbarSticky() {
               variant="gradient"
               size="sm"
               className=""
+              onClick={handleSignup}
+
               style={{
                 backgroundImage: "linear-gradient(to right, #4299E1, #3182CE)",
               }}
