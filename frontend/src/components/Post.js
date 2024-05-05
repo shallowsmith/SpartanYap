@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
-export default function Post({ updateCallback }) {
+export default function Post() {
 
   const [postContent, setPostContent] = useState('');
   const token = localStorage.getItem('token');
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -42,11 +41,10 @@ export default function Post({ updateCallback }) {
         throw new Error(jsonData.message || 'Failed to create the post');
       }
       const jsonData = await response.json();
-      updateCallback();   // Callback to refresh or update the parent component
       alert('Post created successfully!');
     } 
     catch (error) {
-      alert(error.message);
+      alert(error.message + 'hey');
     }
   };
 
