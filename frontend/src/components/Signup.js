@@ -45,7 +45,8 @@ export default function Signup() {
       else {
         throw new Error(data.error || "Unknown error");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error during signup:", error);
       // Handle errors (e.g., show error message to the user)
     }

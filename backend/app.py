@@ -1,10 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+import jwt
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -20,6 +22,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy with Flask app
 db = SQLAlchemy(app)
+
+#Secret Key
+app.config['SECRET_KEY'] = 'key'
 
 # Define the User model using SQLAlchemy
 
@@ -87,7 +92,11 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user and user.verify_password(password):
-        return jsonify({'message': 'Login successful', 'user': {'id': user.userid, 'username': user.username}}), 200
+        #Generate a 30 minute token for successful login
+        print(jwt.__file__)
+        token = jwt.encode(
+            {'user': username, 'exp': datetime.utcnow() + timedelta(minutes=30)}, app.config['SECRET_KEY'], algorithm="HS256")
+        return jsonify({'message': 'Login successful', 'user': {'id': user.userid, 'username': user.username, 'token': token}}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
 
