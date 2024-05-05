@@ -1,6 +1,5 @@
 import "./style.css";
 import React, { useState, useMemo } from "react";
-import UserContext from "./components/UserContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/Login.js";
 import SignupPage from "./pages/Signup.js";
@@ -14,7 +13,6 @@ function App() {
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
-    <UserContext.Provider value={value}>
     <div>
       <BrowserRouter>
         <NavbarSticky />
@@ -25,7 +23,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
-    </UserContext.Provider>
     
   );
 }
