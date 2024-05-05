@@ -1,26 +1,26 @@
 /* Base styles */
 .body {
-    text-align: center;
-    font-family: 'Epilogue', sans-serif;
-    background-color: #fdfbf5;
+  text-align: center;
+  font-family: "Epilogue", sans-serif;
+  background-color: #fdfbf5;
 }
 
 /* Content styles */
 #content {
-    display: flex;
-    text-align: center;
-    align-items: center; 
-    flex-direction: column;
-    padding-top: 30px;
-    color: #374375;
-    background-color: #fdfbf5;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 30px;
+  color: #374375;
+  background-color: #fdfbf5;
 }
 
 /* Title styles */
 .title {
-    font-size: 30px; 
-    margin-top: 5%;
-    margin-bottom: 5%; 
+  font-size: 30px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 /* Common box styles */
@@ -28,162 +28,165 @@
 .div,
 /* For objective & Purpose Box */
 .horizontal-box {
-    padding: 50px;
-    margin-bottom: 40px;
-    margin-top: 20px; /* Decrease top margin */
-    width: 40%;
-    text-align: left;
-    color: #374375;
-    background-color: #dee8f5;
-    border-radius: 10px;
-    line-height: 1.7;
-    box-shadow: 10px 10px 10px #b8bdc3;
+  padding: 50px;
+  margin-bottom: 40px;
+  margin-top: 20px; /* Decrease top margin */
+  width: 40%;
+  text-align: left;
+  color: #374375;
+  background-color: #dee8f5;
+  border-radius: 10px;
+  line-height: 1.7;
+  box-shadow: 10px 10px 10px #b8bdc3;
 }
 
 /* For objective & Purpose Box */
 /* Specific box styles */
 .box {
-    margin-left: 20%;
+  margin-left: 20%;
 }
 
 /* Description Box */
 .div {
-    padding: 40px;
-    margin-bottom: 30px;
-    background-color: #D6CCC2;
-    width: 40%;
-    text-align: left;
-    margin-left: 40%;
-    line-height: 1.7;
+  padding: 40px;
+  margin-bottom: 30px;
+  background-color: #d6ccc2;
+  width: 40%;
+  text-align: left;
+  margin-left: 40%;
+  line-height: 1.7;
 }
 
 /* Powered by People */
 .powered-by {
-    font-size: 30px; /* Increase font size */
-    margin-top: 40px;
-    margin-bottom: 5px; /* Add space below title */
+  font-size: 30px; /* Increase font size */
+  margin-top: 40px;
+  margin-bottom: 5px; /* Add space below title */
 }
 
 /* Meet the Team */
 .meet-the-team {
-    font-size: 30px; /* Increase font size */
-    margin-top: 40px;
-    margin-bottom: 5px; /* Add space below title */
-} 
+  font-size: 30px; /* Increase font size */
+  margin-top: 40px;
+  margin-bottom: 5px; /* Add space below title */
+}
 
 .horizontal-box1 {
-    padding: auto 0x;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 65%;
-    text-align: center;
-    border-radius: 10px;
-    color: #374375;
-    width: 55%;
-
+  padding: auto 0x;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
+  text-align: center;
+  border-radius: 10px;
+  color: #374375;
+  width: 55%;
 }
 #content > div.title > h2 {
-    font-family: 'Times New Roman', sans-serif;
-    color: #374375;
-    font-size: 50px; /* Decrease font size for shorter letters */
-    line-height: .5; /* Adjust line height if needed */
-    margin-top: 10%;
-    margin-bottom: 5%; 
-    font-weight: 540;
-
+  font-family: "Times New Roman", sans-serif;
+  color: #374375;
+  font-size: 50px; /* Decrease font size for shorter letters */
+  line-height: 0.5; /* Adjust line height if needed */
+  margin-top: 10%;
+  margin-bottom: 5%;
+  font-weight: 540;
 }
 
 #content > div.objective-purpose > p {
-   font-size: 17px; /* Decrease font size for paragraph */
-    line-height: 1.4; /* Increase line spacing */
-    color: #60626a;
-    font-family: Apercu, -apple-system, 'BlinkMacSystemFont', Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 17px; /* Decrease font size for paragraph */
+  line-height: 1.4; /* Increase line spacing */
+  color: #60626a;
+  font-family: Apercu, -apple-system, "BlinkMacSystemFont", Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
 #content > div.powered-by > h2 {
-    font-size: 50px; /* Increase font size for heading */
-    font-family: "Times New Roman", Times, serif;
-    color:#374375;
-    font-weight: 540;
-
+  font-size: 50px; /* Increase font size for heading */
+  font-family: "Times New Roman", Times, serif;
+  color: #374375;
+  font-weight: 540;
 }
 
 #content > div.horizontal-box1 > p {
-    font-size: 17px; /* Decrease font size for paragraph */
-    line-height: 1.4; /* Increase line spacing */
-    color: #60626a;
-    font-family: Apercu, -apple-system, 'BlinkMacSystemFont', Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 17px; /* Decrease font size for paragraph */
+  line-height: 1.4; /* Increase line spacing */
+  color: #60626a;
+  font-family: Apercu, -apple-system, "BlinkMacSystemFont", Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
 .temp-robot-image {
-    width: 45%;
-    margin: 2% auto; 
-    border-radius: 10px; 
+  width: 45%;
+  margin: 2% auto;
+  border-radius: 10px;
 }
 
 .robot-image {
-    margin: 2% auto; 
-    width: 50%;
-    border-radius: 10px; 
+  margin: 2% auto;
+  width: 50%;
+  border-radius: 10px;
 }
 
 .pnm-class-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .pnm-class-image {
-    padding: 40px;
-    margin-bottom: 30px;
-    margin-top: 20px;
-    width: 85vh; 
-    margin-left: -50%;
-    border-radius: 50px; 
+  padding: 40px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  width: 85vh;
+  margin-left: -50%;
+  border-radius: 50px;
 }
 
 .other-div {
-    padding: 30px; 
-    background-color: #dee8f5;
-    color: #374375;
-    border-radius: 10px; 
-    margin-left: 50%; 
-    width: 40%;
-    text-align: left;
-    line-height: 1.8;
-    font-family: Apercu, -apple-system, 'BlinkMacSystemFont', Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    margin-top: -450px; 
-    margin-bottom: 10%;
-    box-shadow: 10px 10px 10px #b8bdc3;
+  padding: 30px;
+  background-color: #dee8f5;
+  color: #374375;
+  border-radius: 10px;
+  margin-left: 50%;
+  width: 40%;
+  text-align: left;
+  line-height: 1.8;
+  font-family: Apercu, -apple-system, "BlinkMacSystemFont", Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  margin-top: -450px;
+  margin-bottom: 10%;
+  box-shadow: 10px 10px 10px #b8bdc3;
 }
 
 .objective-purpose {
-    padding: auto 0x;
-    margin-top: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 55%;
-    text-align: center;
-    border-radius: 10px;
-    color: #374375;
-    font-family: 'Times New Roman', sans-serif;
+  padding: auto 0x;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+  text-align: center;
+  border-radius: 10px;
+  color: #374375;
+  font-family: "Times New Roman", sans-serif;
 }
 
 .line {
-    width: 80%;
-    border-top: 1px solid #ccc; /* Light horizontal line */
-    margin: 20px auto; /* Adjust margin for spacing */
+  width: 80%;
+  border-top: 1px solid #ccc; /* Light horizontal line */
+  margin: 20px auto; /* Adjust margin for spacing */
 }
 
 .image-slider {
-    max-width: 75vh;
-    max-height: 75vh;
-    display: block;
+  max-width: 75vh;
+  max-height: 75vh;
+  display: block;
 }
 
 .carousel-container {
-    max-width: 75vh; /* Set the maximum width of the carousel */
-    margin: 0 auto; /* Center the carousel horizontally */
-    margin-bottom: 7%;
-    margin-top: 50px;
+  max-width: 75vh; /* Set the maximum width of the carousel */
+  margin: 0 auto; /* Center the carousel horizontally */
+  margin-bottom: 7%;
+  margin-top: 50px;
 }

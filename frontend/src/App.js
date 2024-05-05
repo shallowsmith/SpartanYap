@@ -4,11 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/Login.js";
 import SignupPage from "./pages/Signup.js";
 import FeedPage from "./pages/Feed.js";
+import AboutPage from "./pages/About.js";
 import NavbarSticky from "./components/NavbarSticky.js";
 
-
 function App() {
-
   const [user, setUser] = useState(null);
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
@@ -20,10 +19,10 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/feed" element={<FeedPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </BrowserRouter>
     </div>
-    
   );
 }
 
