@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { signupFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import Input from "./Input";
@@ -10,6 +11,7 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Signup() {
   const [signupState, setSignupState] = useState(fieldsState);
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setSignupState({ ...signupState, [e.target.id]: e.target.value });
@@ -17,6 +19,7 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(signupState);
+
     createAccount();
   };
 
@@ -32,14 +35,18 @@ export default function Signup() {
         },
         body: JSON.stringify(signupState), // Convert the React state to JSON
       });
+
       const data = await response.json(); // Parse the JSON response
       if (response.ok) {
         console.log("Success:", data);
         // Handle success (e.g., navigate to another page, show message)
-      } else {
+        navigate('/login')
+      } 
+      else {
         throw new Error(data.error || "Unknown error");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error during signup:", error);
       // Handle errors (e.g., show error message to the user)
     }

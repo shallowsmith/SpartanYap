@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { loginFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import FormExtra from "./FormExtra";
 import Input from "./Input";
+import { useNavigate } from "react-router-dom";
 
 const fields = loginFields;
 let fieldsState = {};
@@ -10,6 +12,7 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
@@ -21,7 +24,34 @@ export default function Login() {
   };
 
   //Handle Login API Integration here
-  const authenticateUser = () => {};
+  const authenticateUser = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: loginState.username,
+          password: loginState.password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Full response data received:", data); // Check the entire response
+      if (response.ok) {
+        console.log("Login successful generate local token", data);
+        // Handle successful login, e.g., redirect and update userContext
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/feed");
+      } else {
+        throw new Error(data.message || "Failed to login");
+      }
+    } catch (error) {
+      alert("Error! Username and password can't be found");
+      console.error("Error during login:", error.message);
+    }
+  };
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
