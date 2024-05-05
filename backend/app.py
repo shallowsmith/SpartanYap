@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
-from datetime import datetime
 from dotenv import load_dotenv
 import os
 import jwt
+import pytz
 from datetime import datetime, timedelta
 from functools import wraps
 
@@ -53,9 +53,18 @@ class Post(db.Model):
     __tablename__ = 'posts'
     postid = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    timestamp = db.Column(db.DateTime, default= datetime.utcnow, nullable=False)
     anonymousflag = db.Column(db.Boolean, default=True, nullable=False)
     userid = db.Column(db.Integer, db.ForeignKey('users.userid'))
+
+    def to_dict(self):
+        return {
+        'postid': self.postid,
+        'content': self.content,
+        'timestamp': self.timestamp,
+        'anonymousflag': self.anonymousflag,
+        'userid': self.userid
+    }
 
 #Authenticator for token, checks for a token in authorization header
 #Fetches the user ID
@@ -99,6 +108,18 @@ def create_post(user):
     db.session.add(new_post)
     db.session.commit()
     return jsonify({"message": "Post added successfully"}), 201
+
+#Route for fetching all posts for feed
+@app.route('/get_posts', methods=['GET'])
+def get_posts():
+    try:
+        #Return posts by time they were posted
+        posts = Post.query.order_by(Post.timestamp.desc()).all()
+        return jsonify([post.to_dict() for post in posts]), 200
+    except Exception as e:
+        return jsonify({'message': 'Unable to query posts'}), 500
+    
+
 
 #Route for handling login
 @app.route('/login', methods = ['POST'])

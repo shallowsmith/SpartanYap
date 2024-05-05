@@ -44,7 +44,7 @@ export default function Post() {
       alert('Post created successfully!');
     } 
     catch (error) {
-      alert(error.message + 'hey');
+      alert(error.message);
     }
   };
 
