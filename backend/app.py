@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import os
 import jwt
 from datetime import datetime, timedelta
+from functools import wraps
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Enable Cross-Origin Resource Sharing for all domains on all routes
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # Database configuration using SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
@@ -56,30 +57,47 @@ class Post(db.Model):
     anonymous_flag = db.Column(db.Boolean, default=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.userid'))
 
-#Route for handling the post process
-@app.route('/create_post', methods = ["POST"])
-def create_post():
-    post_content = request.json.get('post')
-    user_id = request.json.get('user_id')   
+#Authenticator for token, checks for a token in authorization header
+#Fetches the user ID
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.args.get('token')
 
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization'].split(" ")[1]
+
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
+
+        try:
+            # Decode the token
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            print("Decoded data:", data)  # Debug output
+            current_user = User.query.filter_by(userid=data['user_id']).first()
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired'}), 401
+        except Exception as e:
+            print("Error decoding token:", str(e))  # More detailed error
+            print("Received token:", token)  # Debug output
+            return jsonify({'message': 'Token is invalid'}), 401
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
+
+#Route for handling the create post process
+@app.route('/create_post', methods = ["POST"])
+@token_required
+def create_post(user):
+    post_content = request.json.get('post')
     if not post_content:
         return jsonify({"message": "Can't post empty text"}), 400
-    if not user_id:
-        return jsonify({"message": "Login is required"}), 400
+    new_post = Post(content=post_content, author=user)
+    db.session.add(new_post)
+    db.session.commit()
+    return jsonify({"message": "Post added successfully"}), 201
 
-    try:
-        user = User.query.get(user_id)
-        if not user:
-            return jsonify({"message": "User not found"}), 404
-
-        new_post = Post(content=post_content, author=user)
-        db.session.add(new_post)
-        db.session.commit()
-        return jsonify({"message": "Post added successfully"}), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 400
-    
 #Route for handling login
 @app.route('/login', methods = ['POST'])
 def login():
@@ -93,9 +111,9 @@ def login():
 
     if user and user.verify_password(password):
         #Generate a 30 minute token for successful login
-        print(jwt.__file__)
         token = jwt.encode(
-            {'user': username, 'exp': datetime.utcnow() + timedelta(minutes=30)}, app.config['SECRET_KEY'], algorithm="HS256")
+            {'user_id': user.userid, 'exp': datetime.utcnow() + timedelta(minutes=30)}, app.config['SECRET_KEY'], algorithm="HS256")
+        print("Token to be sent", token)
         return jsonify({'message': 'Login successful', 'user': {'id': user.userid, 'username': user.username, 'token': token}}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401

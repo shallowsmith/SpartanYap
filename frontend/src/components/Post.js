@@ -1,49 +1,60 @@
-// Placeholder for now
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 
-export default function Post({ existingUser = {}, updateCallback}) {
-  const [post, setPost] = useState(existingUser.post || "");
+export default function Post({ updateCallback }) {
+
+  const [postContent, setPostContent] = useState('');
+  const token = localStorage.getItem('token');
+
+
   const onSubmit = async (e) => {
-    e.preventDefault()
-
-    //Determine if we are updating
-    const updating = Object.entries(existingUser).length !== 0
+    e.preventDefault();
+    if (!token) {
+      alert("You must login to post");
+      return;
+    }
 
     const data = {
-      postMessage
+      content: postContent,
+    };
+    const url = "http://127.0.0.1:5000/create_post"; // Static URL for creating posts
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`  // Include the token in the authorization header
+      },
+      body: JSON.stringify(data)
+    };
+    console.log(postContent)
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) 
+      {
+        const jsonData = await response.json();
+        throw new Error(jsonData.message || 'Failed to create the post');
+      }
+      updateCallback();   // Callback to refresh or update the parent component
+      alert('Post created successfully!');
+    } 
+    catch (error) {
+      alert(error.message);
     }
-     const url = "http://127.0.0.1:5000/" + (updating ? `update_post/${existingUser.post}` : "create_post")
-     const options = {
-            method: updating ? "PATCH" : "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }
-        const response = await fetch(url, options)
-        if (response.status !== 201 && response.status !== 200) {
-            const data = await response.json()
-            alert(data.message)
-        } 
-        else
-        {
-          updateCallback()
-        }
-  }
+  };
 
   return (
     <form onSubmit={onSubmit}>
-            <div>
-                <label htmlFor="postMessage">Post</label>
-                <input
-                    type="text"
-                    id="postContent"
-                    value={postMessage}
-                    onChange={(e) => setPost(e.target.value)}
-                />
-            </div>
-            <button type="submit">{existingUser.post ? "Update" : "Create"}</button>
-      </form>
+      <div>
+        <label htmlFor="postContent">Post</label>
+        <input
+          type="text"
+          id="postContent"
+          value={postContent}
+          onChange={(e) => setPostContent(e.target.value)}
+          placeholder="What's on your mind?"
+        />
+      </div>
+      <button type="submit">Create</button>
+    </form>
   );
 }

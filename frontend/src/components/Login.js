@@ -5,8 +5,6 @@ import FormAction from "./FormAction";
 import FormExtra from "./FormExtra";
 import Input from "./Input";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import UserContext from "./UserContext";
 
 const fields = loginFields;
 let fieldsState = {};
@@ -15,7 +13,6 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
@@ -41,11 +38,12 @@ export default function Login() {
     });
 
     const data = await response.json();
+    console.log("Full response data received:", data);  // Check the entire response
     if (response.ok) 
     {
-      console.log("Login successful update useContext", data);
+      console.log("Login successful generate local token", data);
       // Handle successful login, e.g., redirect and update userContext
-      setUser(user)
+      localStorage.setItem('token', data.user.token);
       navigate('/feed')
     } 
     else 
