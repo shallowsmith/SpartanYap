@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Navbar,
@@ -21,7 +22,7 @@ export default function NavbarSticky() {
   }, []);
 
   const handleLogin = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const handleSignup = () => {
@@ -36,9 +37,9 @@ export default function NavbarSticky() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Trending
-        </a>
+        <Link to="/feed" className="flex items-center">
+          Feed
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -150,7 +151,7 @@ export default function NavbarSticky() {
         <Collapse open={openNav}>
           {navList}
           <div className="flex items-center gap-x-1">
-            <Button fullWidth variant="text" size="sm" className="">
+            <Button fullWidth variant="text" size="sm" className="" onClick={handleLogin}>
               <span>Log In</span>
             </Button>
             <Button
@@ -158,6 +159,8 @@ export default function NavbarSticky() {
               variant="gradient"
               size="sm"
               className=""
+              onClick={handleSignup}
+
               style={{
                 backgroundImage: "linear-gradient(to right, #4299E1, #3182CE)",
               }}

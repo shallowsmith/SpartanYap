@@ -11,7 +11,6 @@ export default function loginPage() {
           linkName="Signup"
           linkUrl="/signup"
         />
-
         <Login />
       </div>
     </div>
