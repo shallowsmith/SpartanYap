@@ -52,10 +52,10 @@ class User(db.Model):
 class Post(db.Model):
     __tablename__ = 'posts'
     postid = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(1000), nullable=False)
+    content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    anonymous_flag = db.Column(db.Boolean, default=False, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.userid'))
+    anonymousflag = db.Column(db.Boolean, default=True, nullable=False)
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'))
 
 #Authenticator for token, checks for a token in authorization header
 #Fetches the user ID
@@ -90,7 +90,9 @@ def token_required(f):
 @app.route('/create_post', methods = ["POST"])
 @token_required
 def create_post(user):
-    post_content = request.json.get('post')
+    print(request.json) 
+    post_content = request.json.get('content')
+    print(post_content)
     if not post_content:
         return jsonify({"message": "Can't post empty text"}), 400
     new_post = Post(content=post_content, author=user)

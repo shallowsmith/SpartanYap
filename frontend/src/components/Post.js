@@ -13,9 +13,17 @@ export default function Post({ updateCallback }) {
       return;
     }
 
+    if (!postContent.trim())
+    {
+      alert("Post can't be empty")
+      return;
+    }
+
+    try {
     const data = {
       content: postContent,
-    };
+    }
+
     const url = "http://127.0.0.1:5000/create_post"; // Static URL for creating posts
     const options = {
       method: "POST",
@@ -24,16 +32,16 @@ export default function Post({ updateCallback }) {
         "Authorization": `Bearer ${token}`  // Include the token in the authorization header
       },
       body: JSON.stringify(data)
-    };
-    console.log(postContent)
-
-    try {
+    }
+      console.log(postContent)
       const response = await fetch(url, options);
+      console.log(JSON.stringify(response));
       if (!response.ok) 
       {
         const jsonData = await response.json();
         throw new Error(jsonData.message || 'Failed to create the post');
       }
+      const jsonData = await response.json();
       updateCallback();   // Callback to refresh or update the parent component
       alert('Post created successfully!');
     } 
