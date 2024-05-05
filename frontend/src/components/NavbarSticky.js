@@ -12,6 +12,7 @@ import {
 
 export default function NavbarSticky() {
   const [openNav, setOpenNav] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,15 @@ export default function NavbarSticky() {
 
   const handleSignup = () => {
     navigate("/signup");
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    console.log("Searching for:", searchQuery);
+    navigate("/searchresults");
   };
 
   const navList = (
@@ -87,6 +97,20 @@ export default function NavbarSticky() {
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              placeholder="Search"
+              className="py-1.5 px-3 bg-blue-gray-100 rounded-md text-sm focus:outline-none focus:ring focus:border-blue-gray-400 hidden lg:block"
+            />
+             <Button
+              onClick={handleSearchSubmit}
+              size="sm"
+              className="hidden lg:block"
+            >
+              Search
+            </Button>
             <div className="flex items-center gap-x-1">
               <Button
                 variant="text"
