@@ -148,6 +148,13 @@ def signup():
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
 
+
+# Route for handling logout process
+@app.route('/logout', methods=['POST'])
+@token_required
+def logout():
+    return jsonify({'message': 'Logout successful.'}), 200
+
 @app.route('/')
 def home():
     return "Hello, world!"

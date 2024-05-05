@@ -24,38 +24,34 @@ export default function Login() {
   };
 
   //Handle Login API Integration here
-  const authenticateUser = async() => {
-  try {
+  const authenticateUser = async () => {
+    try {
       const response = await fetch("http://127.0.0.1:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: loginState.username,  
-        password: loginState.password
-      })
-    });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: loginState.username,
+          password: loginState.password,
+        }),
+      });
 
-    const data = await response.json();
-    console.log("Full response data received:", data);  // Check the entire response
-    if (response.ok) 
-    {
-      console.log("Login successful generate local token", data);
-      // Handle successful login, e.g., redirect and update userContext
-      localStorage.setItem('token', data.user.token);
-      navigate('/feed')
-    } 
-    else 
-    {
-      throw new Error(data.message || "Failed to login");
+      const data = await response.json();
+      console.log("Full response data received:", data); // Check the entire response
+      if (response.ok) {
+        console.log("Login successful generate local token", data);
+        // Handle successful login, e.g., redirect and update userContext
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/feed");
+      } else {
+        throw new Error(data.message || "Failed to login");
+      }
+    } catch (error) {
+      alert("Error! Username and password can't be found");
+      console.error("Error during login:", error.message);
     }
-  } 
-  catch (error) {
-    alert("Error! Username and password can't be found")
-    console.error("Error during login:", error.message);
-  }
-};
+  };
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

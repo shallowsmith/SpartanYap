@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link, Route } from "react-router-dom";
 
 import {
   Navbar,
@@ -13,6 +12,7 @@ import {
 export default function NavbarSticky() {
   const [openNav, setOpenNav] = useState(false);
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     window.addEventListener(
@@ -87,28 +87,48 @@ export default function NavbarSticky() {
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
-            <div className="flex items-center gap-x-1">
-              <Button
-                variant="text"
-                size="sm"
-                className="hidden lg:inline-block"
-                onClick={handleLogin}
-              >
-                <span>Log In</span>
-              </Button>
-              <Button
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #4299E1, #3182CE)",
-                }}
-                onClick={handleSignup}
-              >
-                <span>Sign up</span>
-              </Button>
-            </div>
+            {user ? (
+              <div className="flex items-center gap-x-1">
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="hidden lg:inline-block"
+                >
+                  {user.username}
+                </Typography>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                  onClick={() => navigate("/logout")}
+                >
+                  Log Out
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-x-1">
+                <Button
+                  variant="text"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                  onClick={() => navigate("/login")}
+                >
+                  Log In
+                </Button>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                  onClick={() => navigate("/signup")}
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(to right, #4299E1, #3182CE)",
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            )}
             <IconButton
               variant="text"
               className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -151,7 +171,13 @@ export default function NavbarSticky() {
         <Collapse open={openNav}>
           {navList}
           <div className="flex items-center gap-x-1">
-            <Button fullWidth variant="text" size="sm" className="" onClick={handleLogin}>
+            <Button
+              fullWidth
+              variant="text"
+              size="sm"
+              className=""
+              onClick={handleLogin}
+            >
               <span>Log In</span>
             </Button>
             <Button
@@ -160,7 +186,6 @@ export default function NavbarSticky() {
               size="sm"
               className=""
               onClick={handleSignup}
-
               style={{
                 backgroundImage: "linear-gradient(to right, #4299E1, #3182CE)",
               }}
