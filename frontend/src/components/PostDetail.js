@@ -14,7 +14,7 @@ function PostDetail() {
     const fetchPost = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:5000/get_post/${postid}` // Changed endpoint
+          `https://spartanyapb.onrender.com/get_post/${postid}` // Changed endpoint
         );
         const data = await response.json();
         if (response.ok) {
@@ -28,7 +28,7 @@ function PostDetail() {
 
       try {
         const commentsResponse = await fetch(
-          `http://127.0.0.1:5000/get_comments/${postid}`
+          `https://spartanyapb.onrender.com/get_comments/${postid}`
         );
         const commentsData = await commentsResponse.json();
         if (commentsResponse.ok) {

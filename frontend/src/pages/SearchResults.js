@@ -14,7 +14,7 @@ const SearchResults = () => {
     const fetchSearchResults = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:5000/search_posts?query=${encodeURIComponent(
+          `https://spartanyapb.onrender.com/search_posts?query=${encodeURIComponent(
             searchQuery
           )}`
         );

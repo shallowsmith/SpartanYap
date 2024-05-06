@@ -21,7 +21,7 @@ export default function Post() {
         content: postContent,
       };
 
-      const url = "http://127.0.0.1:5000/create_post"; // Static URL for creating posts
+      const url = "https://spartanyapb.onrender.com/create_post"; // Static URL for creating posts
       const options = {
         method: "POST",
         headers: {

@@ -24,7 +24,7 @@ export default function Comment({ postid }) {
         content: comment,
       };
 
-      const url = "http://127.0.0.1:5000/add_comment";
+      const url = "https://spartanyapb.onrender.com/add_comment";
       const options = {
         method: "POST",
         headers: {

@@ -28,7 +28,7 @@ export default function Signup() {
   // It handles both success and failure scenarios.
   const createAccount = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/signup", {
+      const response = await fetch("https://spartanyapb.onrender.com/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,13 +40,11 @@ export default function Signup() {
       if (response.ok) {
         console.log("Success:", data);
         // Handle success (e.g., navigate to another page, show message)
-        navigate('/login')
-      } 
-      else {
+        navigate("/login");
+      } else {
         throw new Error(data.error || "Unknown error");
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Error during signup:", error);
       // Handle errors (e.g., show error message to the user)
     }

@@ -15,7 +15,7 @@ const Logout = () => {
       localStorage.removeItem("token");
 
       try {
-        await fetch("http://127.0.0.1:5000/logout", {
+        await fetch("https://spartanyapb.onrender.com/logout", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
