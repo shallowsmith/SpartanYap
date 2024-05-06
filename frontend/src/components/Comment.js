@@ -51,7 +51,7 @@ export default function Comment({ postid }) {
   if (!token) {
     return (
       <div>
-        <p>
+        <p className="text-center">
           You must be logged in to post a comment. Please{" "}
           <a href="/login">login</a>.
         </p>

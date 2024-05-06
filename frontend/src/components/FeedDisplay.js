@@ -8,20 +8,20 @@ function FeedDisplay() {
   const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
-  
-   const toggleLike = () => {
-        setLiked(!liked);
-        if (disliked && !liked) { // If dislike is active and like is toggled
-            setDisliked(false);
-        }
-    };
 
-   const toggleDislike = () => {
-        setDisliked(!disliked);
-        if (liked && !disliked) { // If like is active and dislike is toggled
-            setLiked(false);
-        }
-    };
+  const toggleLike = () => {
+    setLiked(!liked);
+    if (disliked && !liked) {
+      setDisliked(false);
+    }
+  };
+
+  const toggleDislike = () => {
+    setDisliked(!disliked);
+    if (liked && !disliked) {
+      setLiked(false);
+    }
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -72,12 +72,18 @@ function FeedDisplay() {
               >
                 <i className="bi bi-chat-right-text"></i>
               </button>
-             <button onClick={toggleLike} className={liked ? 'button-active' : 'button-normal'}>
-                <i className="bi bi-hand-thumbs-up"></i> 
-            </button>
-            <button onClick={toggleDislike} className={disliked ? 'button-active' : 'button-normal'}>
-                <i className="bi bi-hand-thumbs-down"></i> 
-            </button>              
+              <button
+                onClick={toggleLike}
+                className={liked ? "button-active" : "button-normal"}
+              >
+                <i className="bi bi-hand-thumbs-up"></i>
+              </button>
+              <button
+                onClick={toggleDislike}
+                className={disliked ? "button-active" : "button-normal"}
+              >
+                <i className="bi bi-hand-thumbs-down"></i>
+              </button>
             </div>
           </li>
         ))}
