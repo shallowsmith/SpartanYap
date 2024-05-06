@@ -42,6 +42,7 @@ export default function Comment({ postid }) {
       const jsonData = await response.json();
       alert("Comment added successfully!");
       setComment("");
+      window.location.reload();
     } catch (error) {
       alert(error.message);
     }
