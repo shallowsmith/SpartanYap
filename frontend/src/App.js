@@ -1,6 +1,6 @@
 import "./style.css";
 import React, { useState, useMemo } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Login.js";
 import SignupPage from "./pages/Signup.js";
 import FeedPage from "./pages/Feed.js";
@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <NavbarSticky />
         <Routes>
-          <Route path="/" element={<FeedPage />} />
+          <Route path="/" element={<Navigate replace to="/feed" />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/feed" element={<FeedPage />} />
