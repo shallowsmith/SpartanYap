@@ -32,6 +32,14 @@ export default function NavbarSticky() {
     navigate("/signup");
   };
 
+  const handleFeed = () => {
+    navigate("/feed");
+  };
+
+  const handleAbout = () => {
+    navigate("/about");
+  };
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -39,6 +47,7 @@ export default function NavbarSticky() {
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
+        onClick={() => navigate("/feed")}
       >
         <Link to="/feed" className="flex items-center">
           Feed
@@ -49,10 +58,11 @@ export default function NavbarSticky() {
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
+        onClick={() => navigate("/about")}
       >
-        <a href="./about" className="flex items-center">
+        <Link to="/about" className="flex items-center">
           About Us
-        </a>
+        </Link>
       </Typography>
       <SearchBar />
     </ul>
