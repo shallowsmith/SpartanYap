@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
 export default function Post() {
-
-  const [postContent, setPostContent] = useState('');
-  const token = localStorage.getItem('token');
+  const [postContent, setPostContent] = useState("");
+  const token = localStorage.getItem("token");
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -12,41 +11,49 @@ export default function Post() {
       return;
     }
 
-    if (!postContent.trim())
-    {
-      alert("Post can't be empty")
+    if (!postContent.trim()) {
+      alert("Post can't be empty");
       return;
     }
 
     try {
-    const data = {
-      content: postContent,
-    }
+      const data = {
+        content: postContent,
+      };
 
-    const url = "http://127.0.0.1:5000/create_post"; // Static URL for creating posts
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`  // Include the token in the authorization header
-      },
-      body: JSON.stringify(data)
-    }
-      console.log(postContent)
+      const url = "http://127.0.0.1:5000/create_post"; // Static URL for creating posts
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token in the authorization header
+        },
+        body: JSON.stringify(data),
+      };
+      console.log(postContent);
       const response = await fetch(url, options);
       console.log(JSON.stringify(response));
-      if (!response.ok) 
-      {
+      if (!response.ok) {
         const jsonData = await response.json();
-        throw new Error(jsonData.message || 'Failed to create the post');
+        throw new Error(jsonData.message || "Failed to create the post");
       }
       const jsonData = await response.json();
-      alert('Post created successfully!');
-    } 
-    catch (error) {
+      alert("Post created successfully!");
+    } catch (error) {
       alert(error.message);
     }
   };
+
+  if (!token) {
+    return (
+      <div>
+        <p>
+          You must be logged in to create a post. Please{" "}
+          <a href="/login">login</a>.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={onSubmit}>

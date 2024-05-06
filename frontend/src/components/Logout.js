@@ -12,6 +12,7 @@ const Logout = () => {
         localStorage.getItem("user") &&
         JSON.parse(localStorage.getItem("user")).token;
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
 
       try {
         await fetch("http://127.0.0.1:5000/logout", {
