@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import "./FeedDisplay.css" 
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function FeedDisplay() {
     const [posts, setPosts] = useState([]);
@@ -26,16 +28,28 @@ function FeedDisplay() {
         fetchPosts();
     }, []);
 
-    return (
-        <div className="max-w-md mx-auto mt-8">
-            <h1 className="font-bold text-2xl border-b border-gray-300 pb-2 mb-4 text-center">The yappening</h1>
-            {posts.map(post => (
-                <div key={post.postid} className="border-b border-gray-300 pb-4 mb-4">
-                    <p>{post.content}</p>
-                    <small>{new Date(post.timestamp).toLocaleString()}</small>
-                    <p>{`Anonymous`}</p>
-                </div>
-            ))}
+return (
+    <div className = "posts">
+            <ul>
+                {posts.map(post => (
+                    <li key={post.postid} className="post">
+                        <p>{`Anonymous`}</p>
+                        <small>{new Date(post.timestamp).toLocaleString()}</small>
+                        <p>{post.content}</p>
+                        <div class = "bottomPost">
+                        <button className="commentButton">
+                                <i className="bi bi-chat-right-text"></i> 
+                            </button>
+                            <button className="likeButton">
+                                <i className="bi bi-hand-thumbs-up"></i> 
+                            </button>
+                            <button className="dislikeButton">
+                                <i className="bi bi-hand-thumbs-down"></i> 
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
