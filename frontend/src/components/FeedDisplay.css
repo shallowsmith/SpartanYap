@@ -1,49 +1,71 @@
 .posts {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
 }
 
 .post {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 15px;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 10px;
-    position: relative;
+  width: 60%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-content {
+  border: 0.5px solid #c8ebff;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
 }
 
 .post small {
-    color: #666;
+  text-align: right;
+  color: #666;
+}
+
+.align-right {
+  text-align: right;
+  display: block;
 }
 
 .bottomPost {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.buttonblue {
+  background: none;
+  border: none;
+  color: #1da1f2;
+  padding: 2px 2px;
+  font-size: 16px;
 }
 
 .bottomPost button {
-    background: none;
-    border: none;
-    color: #1DA1F2;
-    cursor: pointer;
-    padding: 5px 10px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
+  background: none;
+  border: none;
+  color: #1da1f2;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 
 .bottomPost button:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .bottomPost button:focus {
-    outline: none;
+  outline: none;
 }

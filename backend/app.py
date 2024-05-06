@@ -77,11 +77,11 @@ class Comment(db.Model):
 
     def to_dict(self):
         return {
-            'comment_id': self.comment_id,
-            'post_id': self.post_id,
-            'user_id': self.user_id,
+            'commentid': self.commentid,
+            'postid': self.postid,
+            'userid': self.userid,
             'content': self.content,
-            'timestamp': self.timestamp.isoformat()
+            'timestamp': self.timestamp
         }
 
 
@@ -137,8 +137,18 @@ def get_posts():
         return jsonify([post.to_dict() for post in posts]), 200
     except Exception as e:
         return jsonify({'message': 'Unable to query posts'}), 500
-    
 
+# API for fetching single post
+@app.route('/get_post/<int:postid>', methods=['GET'])
+def get_post(postid):
+    try:
+        post = Post.query.get(postid)
+        if post:
+            return jsonify(post.to_dict()), 200
+        else:
+            return jsonify({'message': 'Post not found'}), 404
+    except Exception as e:
+        return jsonify({'message': 'Unable to query post', 'error': str(e)}), 500
 
 # API for handling login
 @app.route('/login', methods = ['POST'])
@@ -202,8 +212,8 @@ def add_comment(user):
     try:
         data = request.get_json()
         new_comment = Comment(
-            post_id=data['post_id'],
-            user_id=user.userid,  # From the authenticated user
+            postid=data['postid'],
+            userid=user.userid, 
             content=data['content']
         )
         db.session.add(new_comment)
@@ -215,10 +225,10 @@ def add_comment(user):
 
 
 # API for fetching comments
-@app.route('/get_comments/<int:post_id>', methods=['GET'])
-def get_comments(post_id):
+@app.route('/get_comments/<int:postid>', methods=['GET'])
+def get_comments(postid):
     try:
-        comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.timestamp.desc()).all()
+        comments = Comment.query.filter_by(postid=postid).order_by(Comment.timestamp.desc()).all()
         return jsonify([comment.to_dict() for comment in comments]), 200
     except Exception as e:
         return jsonify({'message': 'Failed to fetch comments', 'error': str(e)}), 500
