@@ -39,6 +39,7 @@ export default function Post() {
       }
       const jsonData = await response.json();
       alert("Post created successfully!");
+      window.location.reload();
     } catch (error) {
       alert(error.message);
     }

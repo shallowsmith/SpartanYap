@@ -1,46 +1,69 @@
-import { useLocation } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "./SearchDisplay.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const SearchResults = () => {
   const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("query");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch posts from the database or an API endpoint
-    const fetchPosts = async () => {
+    // Fetch search results from the backend
+    const fetchSearchResults = async () => {
       try {
-        // Replace this with your actual API call to fetch posts
-        const response = await fetch(`https://jsonplaceholder.typicode.com/posts?q=${encodeURIComponent(searchQuery)}`);
+        const response = await fetch(
+          `http://127.0.0.1:5000/search_posts?query=${encodeURIComponent(
+            searchQuery
+          )}`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch posts');
+          throw new Error("Failed to fetch search results");
         }
         const data = await response.json();
-        const filteredPosts = data.filter(post =>
-          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.body.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setSearchResults(filteredPosts);
+        setSearchResults(data);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching search results:", error);
       }
     };
 
     if (searchQuery) {
-      fetchPosts();
+      fetchSearchResults();
     }
   }, [searchQuery]);
 
-    return (
-      <div className="max-w-2xl mx-auto mt-8">
-      <h1 className="font-bold text-2xl mb-4 text-center">Search Results for "{searchQuery}"</h1>      
-      <div className="flex justify-center px-4">
-        <ul className="list-none p-0">
-          {searchResults.map(post => (
-            <li key={post.id}>
-              <div className="border border-gray-300 p-4 mb-4">
-                <h2 className="text-xl font-semibold">{post.title}</h2>
-                <p>{post.body}</p>
+  const handleCommentClick = (postid) => {
+    navigate(`/post/${postid}`);
+  };
+
+  return (
+    <div className>
+      <h1 className="font-bold text-2xl mb-4 mt-8 text-center">
+        Search Results for "{searchQuery}"
+      </h1>
+      <div className>
+        <ul>
+          {searchResults.map((post) => (
+            <li key={post.postid} className="post">
+              <p>{`Anonymous Spartan Yapper`}</p>
+              <small className="align-right">
+                Uploaded: {new Date(post.timestamp).toLocaleString()}
+              </small>
+              <p className="post-content">{post.content}</p>
+              <div class="bottomPost">
+                <button
+                  className="commentButton"
+                  onClick={() => handleCommentClick(post.postid)}
+                >
+                  <i className="bi bi-chat-right-text"></i>
+                </button>
+                <button className="likeButton">
+                  <i className="bi bi-hand-thumbs-up"></i>
+                </button>
+                <button className="dislikeButton">
+                  <i className="bi bi-hand-thumbs-down"></i>
+                </button>
               </div>
             </li>
           ))}
@@ -49,5 +72,5 @@ const SearchResults = () => {
     </div>
   );
 };
-  
-  export default SearchResults;
+
+export default SearchResults;
