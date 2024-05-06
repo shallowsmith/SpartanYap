@@ -104,6 +104,7 @@ export default function NavbarSticky() {
             as="a"
             href="#"
             className="mr-4 cursor-pointer py-1.5 font-medium"
+            onClick={() => navigate("/feed")}
           >
             SpartanYap
           </Typography>

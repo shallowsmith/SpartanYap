@@ -49,7 +49,7 @@ export default function Post() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="max-w-md mx-auto mt-8">
+    <form onSubmit={onSubmit} className="max-w-md mx-auto mt-2 border border-gray-300 p-4">
       <div className="mb-4">
         <label htmlFor="postContent" className="block text-gray-700">Post</label>
         <input
