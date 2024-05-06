@@ -15,7 +15,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Enable Cross-Origin Resource Sharing for all domains on all routes
-CORS(app, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "*", "methods": "*", "headers": "*"}})
 
 # Database configuration using SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
