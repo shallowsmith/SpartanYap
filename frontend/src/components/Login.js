@@ -43,6 +43,7 @@ export default function Login() {
         console.log("Login successful generate local token", data);
         // Handle successful login, e.g., redirect and update userContext
         localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.user.token);
         navigate("/feed");
       } else {
         throw new Error(data.message || "Failed to login");

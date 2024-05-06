@@ -25,8 +25,8 @@ const Logout = () => {
         console.error("Logout failed", error);
       }
 
-      // Redirect user to the login page or home page after logout
-      navigate("/");
+      // Redirect user to the feed page after logging out
+      navigate("/feed");
     };
 
     // Call the logout function when component mounts
