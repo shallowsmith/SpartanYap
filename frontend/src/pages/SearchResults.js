@@ -32,16 +32,21 @@ const SearchResults = () => {
   }, [searchQuery]);
 
     return (
-    <div>
-      <h1>Search Results for "{searchQuery}"</h1>
-      <ul>
-        {searchResults.map(post => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-          </li>
-        ))}
-      </ul>
+      <div>
+      <h1 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px'}}><strong>Search Results for "{searchQuery}"</strong></h1>      
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '0 20px' }}>
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {searchResults.map(post => (
+            <li key={post.id}>
+              {/* Wrapped post content in a bordered box */}
+              <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+                <h2 style={{ fontSize: '1.5em' }}>{post.title}</h2>
+                <p>{post.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

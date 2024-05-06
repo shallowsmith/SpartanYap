@@ -8,7 +8,9 @@ const SearchBar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     // Redirect to the search results page component with the search query
-    navigate(`/searchresults/${encodeURIComponent(searchQuery)}`);
+    if (searchQuery.trim() !== '') {
+    navigate(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (
