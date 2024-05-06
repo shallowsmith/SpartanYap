@@ -28,7 +28,6 @@ db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'key'
 
 # Define the User model using SQLAlchemy
-
 class User(db.Model):
     __tablename__ = 'users'
     userid = db.Column(db.Integer, primary_key=True)
@@ -49,6 +48,7 @@ class User(db.Model):
             "email": self.email,
         }
 
+# Define the Post model using SQLAlchemy
 class Post(db.Model):
     __tablename__ = 'posts'
     postid = db.Column(db.Integer, primary_key=True)
@@ -65,6 +65,25 @@ class Post(db.Model):
         'anonymousflag': self.anonymousflag,
         'userid': self.userid
     }
+
+# Define the Comment model using SQLAlchemy
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    commentid = db.Column(db.Integer, primary_key=True)
+    postid = db.Column(db.Integer, db.ForeignKey('posts.postid'))
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'))
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'comment_id': self.comment_id,
+            'post_id': self.post_id,
+            'user_id': self.user_id,
+            'content': self.content,
+            'timestamp': self.timestamp.isoformat()
+        }
+
 
 #Authenticator for token, checks for a token in authorization header
 #Fetches the user ID
@@ -95,7 +114,7 @@ def token_required(f):
 
     return decorated
 
-#Route for handling the create post process
+# API for handling the create post process
 @app.route('/create_post', methods = ["POST"])
 @token_required
 def create_post(user):
@@ -109,7 +128,7 @@ def create_post(user):
     db.session.commit()
     return jsonify({"message": "Post added successfully"}), 201
 
-#Route for fetching all posts for feed
+# API for fetching all posts for feed
 @app.route('/get_posts', methods=['GET'])
 def get_posts():
     try:
@@ -121,7 +140,7 @@ def get_posts():
     
 
 
-#Route for handling login
+# API for handling login
 @app.route('/login', methods = ['POST'])
 def login():
     username = request.json.get('username')
@@ -142,7 +161,7 @@ def login():
         return jsonify({'message': 'Invalid credentials'}), 401
 
 
-# Route for handling the signup process
+# API for handling the signup process
 @app.route('/signup', methods=['POST'])
 def signup():
     username = request.json['username']
@@ -170,11 +189,40 @@ def signup():
         return jsonify({"error": str(e)}), 400
 
 
-# Route for handling logout process
+# API for handling logout process
 @app.route('/logout', methods=['POST'])
 @token_required
 def logout():
     return jsonify({'message': 'Logout successful.'}), 200
+
+# API for handling adding comment
+@app.route('/add_comment', methods=['POST'])
+@token_required
+def add_comment(user):
+    try:
+        data = request.get_json()
+        new_comment = Comment(
+            post_id=data['post_id'],
+            user_id=user.userid,  # From the authenticated user
+            content=data['content']
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return jsonify({'message': 'Comment added successfully', 'comment': new_comment.to_dict()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': 'Failed to add comment', 'error': str(e)}), 400
+
+
+# API for fetching comments
+@app.route('/get_comments/<int:post_id>', methods=['GET'])
+def get_comments(post_id):
+    try:
+        comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.timestamp.desc()).all()
+        return jsonify([comment.to_dict() for comment in comments]), 200
+    except Exception as e:
+        return jsonify({'message': 'Failed to fetch comments', 'error': str(e)}), 500
+
 
 @app.route('/')
 def home():
