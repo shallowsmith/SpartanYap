@@ -45,14 +45,7 @@ export default function Post() {
   };
 
   if (!token) {
-    return (
-      <div>
-        <p>
-          You must be logged in to create a post. Please{" "}
-          <a href="/login">login</a>.
-        </p>
-      </div>
-    );
+    return null;
   }
 
   return (
