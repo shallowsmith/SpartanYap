@@ -2,38 +2,31 @@ import { useState, useEffect } from "react";
 import "./FeedDisplay.css" 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function FeedDisplay()
-{
-    const [posts, setPosts] = useState([])
+function FeedDisplay() {
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const fetchPosts = async() => {
+        const fetchPosts = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:5000/get_posts',
-                {
+                const response = await fetch('http://127.0.0.1:5000/get_posts', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
                 console.log('Status Code:', response.status, 'Status Text:', response.statusText);
-                if (!response.ok)
-                {
-                    throw new Error('Failed to connect to backend')
-
+                if (!response.ok) {
+                    throw new Error('Failed to connect to backend');
                 }
-                const posts = await response.json()
-                setPosts(posts)
-            }
-            catch (error)
-            {
-                console.log(error)
+                const posts = await response.json();
+                setPosts(posts);
+            } catch (error) {
+                console.log(error);
             }
         };
     
-
-    fetchPosts();
-}, []);
+        fetchPosts();
+    }, []);
 
 return (
     <div className = "posts">
@@ -59,7 +52,6 @@ return (
             </ul>
         </div>
     );
-
 }
 
 export default FeedDisplay;

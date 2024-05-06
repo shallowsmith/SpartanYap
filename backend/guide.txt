@@ -1,10 +1,17 @@
+To install virutal environment:
+python -m venv venv
+
 To activate the virtual environment on windows:
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+.\venv\Scripts\activate
+
+On Mac:
 .\venv\Scripts\activate
 
 
 To install packages:
 pip install -r requirements.txt
+pip install Flask-Cors
 
 
 To run flask (windows): 
