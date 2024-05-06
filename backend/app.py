@@ -84,6 +84,14 @@ class Comment(db.Model):
             'timestamp': self.timestamp
         }
 
+class Reaction(db.Model):
+    __tablename__= 'reactions'
+    reactionid = db.Column(db.Integer, primary_key=True)
+    postid = db.Column(db.Integer, db.ForeignKey('posts.postid'), nullable=True)
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'))  
+    type = db.Column(db.String(10), nullable=False)  # 'Like' or 'Dislike'
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 #Authenticator for token, checks for a token in authorization header
 #Fetches the user ID
@@ -114,6 +122,71 @@ def token_required(f):
 
     return decorated
 
+#Route to add reaction to the comment '''
+@app.route('/toggle_reaction', methods=['POST'])
+@token_required
+def toggle_reaction(currentuser):
+    data = request.get_json()
+    postid = data.get('postid')
+    reactiontype = data.get('type', None)  # Expect 'Like' or 'Dislike'
+
+    if not reactiontype or reactiontype not in ['Like', 'Dislike']:
+        return jsonify({'message': 'Invalid reaction type'}), 400
+
+    target = Post.query.get(postid)
+    if not target:
+        return jsonify({'message': 'Post not found'}), 404
+
+    # Check if the user already has a reaction on this target
+    reaction = Reaction.query.filter_by(
+        userid=currentuser.userid,
+        postid=postid,
+    ).first()
+
+    if reaction:
+        if reaction.type == reactiontype:
+            # User is undoing their reaction
+            db.session.delete(reaction)
+            db.session.commit()
+            return jsonify({'message': 'Reaction removed successfully'}), 200
+        else:
+            # Changing the reaction type
+            reaction.type = reactiontype
+    else:
+        # New reaction
+        reaction = Reaction(
+            postid=postid,
+            userid=currentuser.userid,
+            type=reactiontype
+        )
+        db.session.add(reaction)
+
+    db.session.commit()
+    return jsonify({'message': 'Reaction updated successfully'}), 200
+
+#API for returning the reaction
+@app.route('/get_reaction', methods= ['GET'])
+@token_required
+def get_reaction(current_user):
+    post_id = request.args.get('postid', type=int)
+    print(f"User ID: {current_user.userid}, Post ID: {post_id}")
+
+    if not post_id:
+        return jsonify({'error': 'Missing post ID'}), 400
+
+    # Query for the existing reaction using only the authenticated user's ID
+    reaction = Reaction.query.filter_by(userid=current_user.userid, postid=post_id).first()
+    if reaction:
+        return jsonify({
+            'reaction_id': reaction.reactionid,
+            'post_id': reaction.postid,
+            'user_id': current_user.userid,  # Use authenticated user's ID
+            'type': reaction.type,
+            'timestamp': reaction.timestamp.isoformat()
+        }), 200
+    else:
+        return jsonify({'message': 'No reaction found'}), 404
+
 # API for handling the create post process
 @app.route('/create_post', methods = ["POST"])
 @token_required
@@ -127,6 +200,7 @@ def create_post(user):
     db.session.add(new_post)
     db.session.commit()
     return jsonify({"message": "Post added successfully"}), 201
+
 
 # API for fetching all posts for feed
 @app.route('/get_posts', methods=['GET'])

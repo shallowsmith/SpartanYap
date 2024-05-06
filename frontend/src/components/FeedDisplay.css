@@ -7,6 +7,26 @@
   padding: 20px;
 }
 
+button:hover{
+    background-color: #007bff;
+}
+
+.button-normal {
+    background-color: #f8f9fa; /* light gray */
+    color: black;
+    border: 1px solid #dee2e6; /* light gray border */
+}
+
+.button-active {
+    background-color: #007bff; 
+    color: white;
+    border: 1px solid #007bff; 
+}
+
+
+
+
+
 .post {
   width: 60%;
   margin: 20px auto;
