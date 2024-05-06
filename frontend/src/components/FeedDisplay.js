@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import "./FeedDisplay.css" 
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function FeedDisplay()
 {
@@ -34,14 +36,24 @@ function FeedDisplay()
 }, []);
 
 return (
-    <div>
-            <h1>Posts</h1>
+    <div className = "posts">
             <ul>
                 {posts.map(post => (
-                    <li key={post.postid}>
-                        <p>{post.content}</p>
-                        <small>{new Date(post.timestamp).toLocaleString()}</small>
+                    <li key={post.postid} className="post">
                         <p>{`Anonymous`}</p>
+                        <small>{new Date(post.timestamp).toLocaleString()}</small>
+                        <p>{post.content}</p>
+                        <div class = "bottomPost">
+                        <button className="commentButton">
+                                <i className="bi bi-chat-right-text"></i> 
+                            </button>
+                            <button className="likeButton">
+                                <i className="bi bi-hand-thumbs-up"></i> 
+                            </button>
+                            <button className="dislikeButton">
+                                <i className="bi bi-hand-thumbs-down"></i> 
+                            </button>
+                        </div>
                     </li>
                 ))}
             </ul>
