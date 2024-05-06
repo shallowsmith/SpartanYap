@@ -9,6 +9,7 @@ import NavbarSticky from "./components/NavbarSticky.js";
 import SearchResults from "./pages/SearchResults.js";
 import SearchBar from "./components/SearchBar.js";
 import Logout from "./components/Logout.js";
+import PostDetail from "./components/PostDetail.js";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,9 +24,9 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/searchresults"  element={<SearchResults />} />
+          <Route path="/searchresults" element={<SearchResults />} />
           <Route path="/logout" element={<Logout />} />
-
+          <Route path="/post/:postid" element={<PostDetail />} />
         </Routes>
       </BrowserRouter>
     </div>
