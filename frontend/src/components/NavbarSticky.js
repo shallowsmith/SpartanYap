@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link, Route } from "react-router-dom";
+import { useNavigate, Link, Route, BrowserRouter } from "react-router-dom";
+import SearchBar from "./SearchBar.js";
 
 import {
   Navbar,
@@ -12,7 +13,27 @@ import {
 export default function NavbarSticky() {
   const [openNav, setOpenNav] = useState(false);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    // Fetch posts from the database
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('url_to_your_api/posts');
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+        const data = await response.json();
+        setPosts(data.posts); // Assuming the response contains an array of posts
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+    }, []); // Fetch posts on component mount
 
   useEffect(() => {
     window.addEventListener(
@@ -71,6 +92,7 @@ export default function NavbarSticky() {
           About Us
         </a>
       </Typography>
+      <SearchBar />
     </ul>
   );
 

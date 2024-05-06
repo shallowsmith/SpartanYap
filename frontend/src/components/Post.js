@@ -49,18 +49,24 @@ export default function Post() {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label htmlFor="postContent">Post</label>
+    <form onSubmit={onSubmit} className="max-w-md mx-auto mt-8">
+      <div className="mb-4">
+        <label htmlFor="postContent" className="block text-gray-700">Post</label>
         <input
           type="text"
           id="postContent"
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
           placeholder="What's on your mind?"
+          className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
         />
       </div>
-      <button type="submit">Create</button>
+      <button 
+        type="submit" 
+        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+      >
+        Create
+      </button>
     </form>
   );
 }
