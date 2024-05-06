@@ -233,6 +233,23 @@ def get_comments(postid):
     except Exception as e:
         return jsonify({'message': 'Failed to fetch comments', 'error': str(e)}), 500
 
+# API for searching posts
+@app.route('/search_posts', methods=['GET'])
+def search_posts():
+    try:
+        search_query = request.args.get('query')
+        if not search_query:
+            return jsonify({'message': 'Query parameter "query" is required'}), 400
+
+        search_results = Post.query.filter(
+            (Post.content.ilike(f"%{search_query}%"))
+        ).all()
+
+        return jsonify([post.to_dict() for post in search_results]), 200
+    except Exception as e:
+        return jsonify({'message': 'Failed to search posts', 'error': str(e)}), 500
+
+
 
 @app.route('/')
 def home():

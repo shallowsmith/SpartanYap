@@ -18,24 +18,6 @@ export default function NavbarSticky() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // Fetch posts from the database
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('url_to_your_api/posts');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data = await response.json();
-        setPosts(data.posts); // Assuming the response contains an array of posts
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-
-    fetchPosts();
-    }, []); // Fetch posts on component mount
-
-  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
