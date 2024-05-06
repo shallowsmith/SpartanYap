@@ -12,6 +12,7 @@ const Logout = () => {
         localStorage.getItem("user") &&
         JSON.parse(localStorage.getItem("user")).token;
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
 
       try {
         await fetch("http://127.0.0.1:5000/logout", {
@@ -25,8 +26,8 @@ const Logout = () => {
         console.error("Logout failed", error);
       }
 
-      // Redirect user to the login page or home page after logout
-      navigate("/");
+      // Redirect user to the feed page after logging out
+      navigate("/feed");
     };
 
     // Call the logout function when component mounts

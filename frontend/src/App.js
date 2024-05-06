@@ -8,6 +8,7 @@ import AboutPage from "./pages/About.js";
 import NavbarSticky from "./components/NavbarSticky.js";
 import SearchResults from "./pages/SearchResults.js";
 import SearchBar from "./components/SearchBar.js";
+import Logout from "./components/Logout.js";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,6 +24,8 @@ function App() {
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/searchresults"  element={<SearchResults />} />
+          <Route path="/logout" element={<Logout />} />
+
         </Routes>
       </BrowserRouter>
     </div>
