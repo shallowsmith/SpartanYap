@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signupFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import Input from "./Input";
@@ -23,7 +23,6 @@ export default function Signup() {
     createAccount();
   };
 
-  //Signup API Integration
   // This function sends a POST request to Flask API endpoint with the user details, expects a JSON response, and logs the outcome.
   // It handles both success and failure scenarios.
   const createAccount = async () => {
@@ -39,14 +38,12 @@ export default function Signup() {
       const data = await response.json(); // Parse the JSON response
       if (response.ok) {
         console.log("Success:", data);
-        // Handle success (e.g., navigate to another page, show message)
         navigate("/login");
       } else {
         throw new Error(data.error || "Unknown error");
       }
     } catch (error) {
       console.error("Error during signup:", error);
-      // Handle errors (e.g., show error message to the user)
     }
   };
 
